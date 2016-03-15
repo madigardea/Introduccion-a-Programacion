@@ -1,0 +1,52 @@
+#include "librerias.h"
+
+int kSize=8;
+
+void imprimearreglo(int* arreglo, int size) {
+    for(int f=0; f<size; ++f) {
+        printf("%d", arreglo[f]);
+    }
+    printf("\n");
+}
+
+
+void swap(int* z, int* k){
+    double u;
+    u=*z;
+    *z=*k;
+    *k=u;
+}
+int hoare(int s[], int b, int l) {
+    int w=s[b];
+    int f=b-1;
+    int h=l;
+    while (1) {
+        do h--;
+        while (s[h]>w);
+        do f++;
+        while (s[f]<w);
+        if (f<h) {
+            swap(&s[f], &s[h]);
+        } else {
+            return h+1;
+        }
+    }
+}
+
+void quicksort(int s[],int size, int inicio, int fin) {
+    int m;
+    if (fin-inicio<2) return;
+    m=hoare(s, inicio, fin);
+    quicksort(s, kSize, inicio, m);
+    imprimearreglo(s, kSize);
+    quicksort(s, kSize, m, fin);
+    imprimearreglo(s, kSize);
+}
+int main(int argc, char* argv[]) {
+    int arreglo[] = {12,15,18,27,13,28,5,74};
+    imprimearreglo(arreglo, kSize);
+    quicksort(arreglo, kSize, 0, kSize);
+    imprimearreglo(arreglo, kSize);
+}
+
+return 0;
